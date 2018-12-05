@@ -36,7 +36,4 @@ class MusicCatigory:
             
 # main function
 if __name__ == "__main__":
-    print("hello world")
-    a = MusicCatigory("./music/classical")
-    a.loadStuff()
     pass
