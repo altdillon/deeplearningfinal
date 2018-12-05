@@ -20,20 +20,33 @@ from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from keras.regularizers import l2
 # import audo stuff 
 from pydub import AudioSegment
+import json 
+# import the name spaces for the nurl network models 
+from AlexNet import *
+from LeNet import *
 
-
-# class for music catigory
-class MusicCatigory:
-    def __init__(self,directory):
-        self.loadedSongs = 0
-        self.path = directory
-        self.wav_files = [] # empty list dude 
+class instrument:
+    def __init__(self,label=None,wavdata=None,duration=0):
+        self.label = label
+        self.wavdata = wavdata # this had better be a numpy array !
+        self.duration = duration
+    def getDict(self):
+        instdata = {
+            "label" : self.label,
+            "wavarray" : self.wavdata.tobytes(), # this needs to be saved as a numpy array
+            "duration" : self.duration
+        }
         
-    def loadStuff(self):
-        for audio_path in glob.glob(self.path+"/*.wav"):
-            pass # nop boi
-            self.wav_files.append(AudioSegment.from_wav(audio_path))
-            
+        return instdata
+    
+# loads audio and training data from a file
+# returns a list of insterment objects 
+def loadAudio(filepath):
+    pass
+
+def saveAudio(filepath,audiolist):
+    pass
+        
 # main function
 if __name__ == "__main__":
     pass
