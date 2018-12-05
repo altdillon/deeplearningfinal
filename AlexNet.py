@@ -66,34 +66,63 @@ def loadfolder(path):
     return data # return the data 
     
 
-# lenet, from Chao's minst hand writing exsample 
-def LeNet(width=1, height=1, depth=1, classes=1):
-		# initialize the model
-		model = Sequential()
-		inputShape = (height, width, depth)
+# note, this is my instance of the alenet
+# the         
+def AlexNet(width, height, depth, classes):
+    model = Sequential()
+    inputshape = (width,height,depth)
+    inputvolume = width*height*depth
+    # first layer 
+    model.add(Conv2D(filters=96, input_shape=inputshape, kernel_size=(11,11), strides=(4,4), padding="valid"))
+    model.add(Activation("relu"))
+    model.add(BatchNormalization())
 
-		# if we are using "channels first", update the input shape
-		#if K.image_data_format() == "channels_first":
-		#	inputShape = (depth, height, width)
+    # second layer, max pooling
+    model.add(MaxPooling2D(pool_size=(3,3), strides=(2,2), padding="valid")) # in powerpoint pool size is 3,3
+    # thierd layer, second convultion
+    model.add(Conv2D(filters=256, kernel_size=(5,5), strides=(1,1), padding="valid")) # kernal used to be 11x11
+    model.add(Activation("relu"))
+    model.add(BatchNormalization())
 
-		# first set of CONV => RELU => POOL layers
-		model.add(Conv2D(20, (5, 5), padding="same", input_shape=inputShape))
-		model.add(Activation("relu"))
-		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    # skipping normalization, for now
+    model.add(MaxPooling2D(pool_size=(3,3), strides=(2,2), padding="valid")) # again pool size is 3,3 in power point
+    # fourth layer, convultional layer 
+    model.add(Conv2D(filters=384, kernel_size=(3,3), strides=(1,1), padding="valid"))
+    model.add(Activation("relu"))
+    model.add(BatchNormalization())
 
-		# second set of CONV => RELU => POOL layers
-		model.add(Conv2D(50, (5, 5), padding="same"))
-		model.add(Activation("relu"))
-		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    # fith layer convultional layer 
+    model.add(Conv2D(filters=384, kernel_size=(3,3), strides=(1,1), padding="valid"))
+    model.add(Activation("relu"))
+    model.add(BatchNormalization())
 
-		# first (and only) set of FC => RELU layers
-		model.add(Flatten())
-		model.add(Dense(500))
-		model.add(Activation("relu"))
+    
+    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), padding="valid"))
+    model.add(Activation("relu"))
+    model.add(BatchNormalization())
 
-		# softmax classifier
-		model.add(Dense(classes))
-		model.add(Activation("softmax"))
-
-		# return the constructed network architecture
-		return model
+    # max pooling...
+    model.add(MaxPooling2D(pool_size=(3,3), strides=(2,2), padding="valid"))
+    # at this point we need to start getting ready for the interconnected layer 
+    model.add(Flatten()) # flatten from a 3d shape into a 2d shape
+    # fully connected layer, poweroint has two of these
+    model.add(Dense(4096, input_shape=(inputvolume,)))
+    model.add(Activation("relu"))
+    model.add(Dropout(0.4)) # to prevent overfitting
+    
+    model.add(Dense(4096,))
+    model.add(Activation("relu"))
+    model.add(Dropout(0.4)) # to prevent overfitting
+    
+    # 3rd Dense Layer
+    model.add(Dense(1000))
+    model.add(Activation("relu"))
+    # Add Dropout
+    model.add(Dropout(0.4))
+    # Batch Normalisation
+    #model.add(BatchNormalization())
+    
+    model.add(Dense(classes)) # should have 3 classes, for some reason only works with 2
+    #model.add(Activation("relu"))
+    model.add(Activation("softmax"))
+    return model
