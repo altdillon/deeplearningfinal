@@ -13,12 +13,14 @@ testing = False
 training = True
 classify = False
 display_results = False
+use_fft = True
 # current nurl networks, AlexNet,LeNet
 currentNetwork = "AlexNet"
 # list for instrument catigoryies
 # As ashamed as I am to admit this, I feel that you're more qualified to edit this than I am ~Dillon
-catigoryies = ["drums","base","keyboard","voice"]
+catigoryies = ["drums","guitar"]
 
 # names of folders for training and testing
-traingFolder = "./training"
-testingFolder = "./testing" 
+# NOTE: We don't need ./ here
+traingFolder = "training"
+testingFolder = "testing" 

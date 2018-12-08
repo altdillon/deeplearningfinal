@@ -111,12 +111,24 @@ if __name__ == "__main__":
         # load up the insturment objects 
         trainingData_catigories = [] # empty list to store the folder paths for the training data 
         for lables in catigoryies:
-            labelfolder = searchCatigoryFolders(traingFolder+lables) # search for a folder with that label name
+            labelfolder = searchCatigoryFolders(traingFolder+"/"+lables) # search for a folder with that label name, for forget the /
             if labelfolder != None: # if there's something found 
                 print("loading label",labelfolder)
                 trainingData_catigories.append(loadAudio(labelfolder,lables))
             
         # ok, we're now ready to train!
+        # we just have to assign a model
+        NNmodel = None # assign this as empty
+        width = 0
+        height = 1 # height is 1 since we're only dealing with one dementional object 
+        classes = len(catigoryies) 
+        
+        if currentNetwork == "AlexNet":
+            pass
+        elif currentNetwork == "LeNet":
+            pass
+        elif currentNetwork == "CustomNet":
+            pass
         
         
     if testing == False and training == False:
