@@ -79,6 +79,12 @@ def searchCatigoryFolders(catigory,folder=""):
     elif len(folders) == 1 and folders[0] == catigory: # if one item was found and its name matches the name of the catigory
         return "."+folder+"/"+folders[0]     
         
+def trainModel(model,epochs,inputdata,lables):
+    model.summery()
+    model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy']) # fell free to change this
+    model.fit(inputdata,lables,epochs=epochs,verbose=2)
+    #return   
+    
 # main function
 if __name__ == "__main__":
     print("deep learning final project")

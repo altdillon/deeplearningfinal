@@ -1,11 +1,11 @@
-import keras
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout, Flatten,Conv2D, MaxPooling2D
-from keras.layers.normalization import BatchNormalization
-from keras.models import load_model # added
-import matplotlib.pyplot as plt
-from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
-from keras.regularizers import l2
+#import keras
+#from keras.models import Sequential
+#from keras.layers import Dense, Activation, Dropout, Flatten,Conv2D, MaxPooling2D
+#from keras.layers.normalization import BatchNormalization
+#from keras.models import load_model # added
+#import matplotlib.pyplot as plt
+#from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+#from keras.regularizers import l2
 
 
 #!/usr/bin/env python3
@@ -51,19 +51,19 @@ from keras.regularizers import l2
 #        index += 1
 #        
 #    return imgarray
-
-def loadfolder(path):
-    filecount = len(os.listdir(path)) # counte the number of files in a folder
-    # load the images, quick and dirty like
-    emptyshape = (filecount,256,256,3)
-    data = np.empty(emptyshape)
-    index = 0
-    for image_path in glob.glob(path+"/*.png"):
-        image = imageio.imread(image_path)
-        data[index] = image
-        index+=1
-        
-    return data # return the data 
+#
+#def loadfolder(path):
+#    filecount = len(os.listdir(path)) # counte the number of files in a folder
+#    # load the images, quick and dirty like
+#    emptyshape = (filecount,256,256,3)
+#    data = np.empty(emptyshape)
+#    index = 0
+#    for image_path in glob.glob(path+"/*.png"):
+#        image = imageio.imread(image_path)
+#        data[index] = image
+#        index+=1
+#        
+#    return data # return the data 
     
 
 # note, this is my instance of the alenet
