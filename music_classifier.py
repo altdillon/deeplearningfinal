@@ -31,7 +31,11 @@ class Instrument:
     def __init__(self,label=None,wavdata=None,duration=0):
         self.label = label
         self.wavdata = wavdata # this had better be a numpy array !
-        self.fftdata = fft(wavdata) # take the fft of the incoming data
+#        if dofft:
+#            self.fftdata = fft(wavdata) # take the fft of the incoming data
+#        else:
+#            self.fftdata = None
+            
     def getDict(self):
         instdata = {
             "label" : self.label,
@@ -60,11 +64,15 @@ def getData(filename):
 
 # loads audio and training data from a file
 # returns a list of insterment objects 
-def loadAudio(filepath,instlable):
+def loadAudio(filepath,instlable,useFFT = False):
     filenames = findWavFiles(filepath) # find a list of wav files in the folder 
     loadedCatigory = [] # empty list of loaded files 
-    for file in filenames: 
-        rawdata = getData(file) # load the raw wav data at the path
+    for file in filenames:
+        rawdata = None
+        if useFFT == False:
+            rawdata = getData(file) # load the raw wav data at the path
+        elif useFFT == True:
+            rawdata = fft(getData(file)) # run an fft operation on the input 
         newinstrument = Instrument(label=instlable,wavdata=rawdata,duration=30) # note, durationg is known to be 30
         loadedCatigory.append(newinstrument) # add the insturment to the catigory
         
@@ -108,13 +116,20 @@ if __name__ == "__main__":
         print("training mode...")
         print("loading training data")
         
+        # display wheter or not fft is being used
+        if use_fft:
+            print("fft is in use")
+        else:
+            print("fft is not in use)
+        
         # load up the insturment objects 
         trainingData_catigories = [] # empty list to store the folder paths for the training data 
         for lables in catigoryies:
             labelfolder = searchCatigoryFolders(traingFolder+"/"+lables) # search for a folder with that label name, for forget the /
             if labelfolder != None: # if there's something found 
                 print("loading label",labelfolder)
-                trainingData_catigories.append(loadAudio(labelfolder,lables))
+                # use fft is loaded from the config file
+                trainingData_catigories.append(loadAudio(labelfolder,lables,useFFT = use_fft))
             
         # ok, we're now ready to train!
         # we just have to assign a model

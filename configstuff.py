@@ -13,7 +13,7 @@ testing = False
 training = True
 classify = False
 display_results = False
-use_fft = True
+use_fft = False
 # current nurl networks, AlexNet,LeNet
 currentNetwork = "AlexNet"
 # list for instrument catigoryies
