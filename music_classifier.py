@@ -30,7 +30,7 @@ from LeNet import *
 class Instrument:
     def __init__(self,label=None,wavdata=None,duration=0):
         self.label = label
-        self.wavdata = wavdata # this had better be a numpy array !
+        self.wavdata = self.resize(wavdata) # this had better be a numpy array !
 #        if dofft:
 #            self.fftdata = fft(wavdata) # take the fft of the incoming data
 #        else:
@@ -45,6 +45,15 @@ class Instrument:
         
         return instdata
     
+    # truncate the numpy arrays down to a normalized 10580000
+    # if it is less than than return
+    def resize(self,arrin):
+        goalsize = 10580000
+        if len(arrin) > goalsize:
+            return arrin[:goalsize]
+        else:
+            return arrin 
+        
     # maybe add a method to show plot data? 
     
 # functions for dealing with wav files 
@@ -120,7 +129,7 @@ if __name__ == "__main__":
         if use_fft:
             print("fft is in use")
         else:
-            print("fft is not in use)
+            print("fft is not in use")
         
         # load up the insturment objects 
         trainingData_catigories = [] # empty list to store the folder paths for the training data 
@@ -133,20 +142,21 @@ if __name__ == "__main__":
             
         # ok, we're now ready to train!
         # we just have to assign a model
-        NNmodel = None # assign this as empty
-        width = 0
+        NNmodel = None # assign this as empty, this this stays none it'll thow an exception somewhare down the line
+        width = 10580000 # this is a known constant
         height = 1 # height is 1 since we're only dealing with one dementional object 
+        depth = 1 # again, this is a one depnetiona classifer
         classes = len(catigoryies) 
         
         if currentNetwork == "AlexNet":
-            pass
+            NNmodel = AlexNet(width,height,depth,classes)
         elif currentNetwork == "LeNet":
             pass
         elif currentNetwork == "CustomNet":
             pass
         
-        
-    if testing == False and training == False:
+    # load 
+    if testing == False and training == False and display_results == True:
         print("displaying output graphs")
     
     pass # baiscly a nop

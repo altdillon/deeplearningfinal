@@ -14,6 +14,7 @@ training = True
 classify = False
 display_results = False
 use_fft = False
+save_trained_model = True
 # current nurl networks, AlexNet,LeNet
 currentNetwork = "AlexNet"
 # list for instrument catigoryies
