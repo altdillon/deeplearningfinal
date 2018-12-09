@@ -25,12 +25,13 @@ from configstuff import *
 # import the name spaces for the nurl network models 
 from AlexNet import *
 from LeNet import *
+from custom1dNet import *
 
 # class or struct for storing training a testing information
 class Instrument:
     def __init__(self,label=None,wavdata=None,duration=0):
         self.label = label
-        self.wavdata = self.resize(wavdata) # this had better be a numpy array !
+        self.wavdata = self.truncate(wavdata) # this had better be a numpy array !
 #        if dofft:
 #            self.fftdata = fft(wavdata) # take the fft of the incoming data
 #        else:
@@ -47,14 +48,19 @@ class Instrument:
     
     # truncate the numpy arrays down to a normalized 10580000
     # if it is less than than return
-    def resize(self,arrin):
+    def truncate(self,arrin):
         goalsize = 10580000
         if len(arrin) > goalsize:
             return arrin[:goalsize]
         else:
             return arrin 
+    
+    # resize from a very lone 1d array to a 2d array.  Maynot be neede but I'm gonna keep it as a place holder 
+    # just in case we end up needing it
+    def resize(self,arrin):
+        pass
         
-    # maybe add a method to show plot data? 
+    # maybe add a method to show plot data? of the raw wav file?
     
 # functions for dealing with wav files 
 # find all the wav files in a folder 
@@ -140,7 +146,7 @@ if __name__ == "__main__":
                 # use fft is loaded from the config file
                 trainingData_catigories.append(loadAudio(labelfolder,lables,useFFT = use_fft))
             
-        # ok, we're now ready to train!
+        # ok, we're to setup the network
         # we just have to assign a model
         NNmodel = None # assign this as empty, this this stays none it'll thow an exception somewhare down the line
         width = 10580000 # this is a known constant
@@ -153,7 +159,13 @@ if __name__ == "__main__":
         elif currentNetwork == "LeNet":
             pass
         elif currentNetwork == "CustomNet":
-            pass
+            NNmodel = custom1DNet(width,classes) # custom 1d netowrk
+        
+        # comple the network and print out a summery
+        NNmodel.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+        NNmodel.summary()
+        # get ready for the training sequence
+        
         
     # load 
     if testing == False and training == False and display_results == True:
