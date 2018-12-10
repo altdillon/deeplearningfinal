@@ -29,6 +29,23 @@ from configstuff import *
 #from LeNet import *
 from custom1dNet import *
 
+def convertCatigories(lables,labarr):
+    numlables = np.empty(len(labarr))
+    index = 0 
+    
+    for elem in labarr:
+        for lable in lables:
+            lvalue = 0
+            if elem == lable:
+                numlables[index] = lvalue
+            else:
+                lvalue += 1
+        index += 1
+            
+    
+    return numlables
+    
+
 def getData(filename,use_fft=False):
     if os.path.isfile(filename):
         wavfile = AudioSegment.from_wav(filename)
@@ -78,6 +95,7 @@ if __name__ == "__main__":
     NNinput_2d = np.append(train_drums,train_guitar,axis=0)
     NNinput = np.expand_dims(NNinput_2d,axis=2)
     trainingOutputLables = np.append(lables_drums[:len(train_drums)],lables_guitar[:len(train_guitar)])
+    numerical_lables = convertCatigories(trainingOutputLables,catigoryies)
     # now we just do the deed
     if training == True:
         print("now training...")
