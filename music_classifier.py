@@ -55,6 +55,9 @@ class Instrument:
         else:
             return arrin 
     
+    def gettup(self):
+        return (self.wavdata,self.label)
+    
     # resize from a very lone 1d array to a 2d array.  Maynot be neede but I'm gonna keep it as a place holder 
     # just in case we end up needing it
     def resize(self,arrin):
@@ -103,7 +106,7 @@ def searchCatigoryFolders(catigory,folder=""):
         return "."+folder+"/"+folders[0]     
         
 def trainModel(model,epochs,inputdata,lables):
-    model.summery()
+    #model.summery()
     model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy']) # fell free to change this
     model.fit(inputdata,lables,epochs=epochs,verbose=2)
     #return   
@@ -165,10 +168,12 @@ if __name__ == "__main__":
         NNmodel.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
         NNmodel.summary()
         # get ready for the training sequence
-        
+        # first we need to split up the lables itno traing data, I'm thingking 1/4 testing, 3/4 training
+        # this is just a quick and dirty way of doing this...
+        trainingInputs = trainingData_catigories[0]
+0        
+    
         
     # load 
-    if testing == False and training == False and display_results == True:
-        print("displaying output graphs")
-    
-    pass # baiscly a nop
+#    if testing == False and training == False and display_results == True:
+#        print("displaying output graphs")

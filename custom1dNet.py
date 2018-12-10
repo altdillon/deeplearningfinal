@@ -36,12 +36,12 @@ time_periods = 240 # this will never change
 def custom1DNet(length,classes):
     model = Sequential()
     model.add(Conv1D(32, 4, activation='relu', input_shape=(length, 1))) # first layer, feature detector
-    model.add(Conv1D(16, 10, activation='relu'))
+    model.add(Conv1D(16, 4, activation='relu'))
     model.add(MaxPooling1D(4))
     # after this point I'm just adding layers for good measure 
     # the number of layers at this point is pretty arbitary
-    model.add(Conv1D(32, 10, activation='relu'))
-    model.add(Conv1D(32, 10, activation='relu'))
+    model.add(Conv1D(32, 4, activation='relu'))
+    model.add(Conv1D(32, 4, activation='relu'))
     model.add(GlobalAveragePooling1D())
     model.add(Dropout(0.5)) # drop out to *hopefully* prevent over fitting.
     # finaly we use a dence layer to force every thing down into two layers
