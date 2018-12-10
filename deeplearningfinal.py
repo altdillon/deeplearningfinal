@@ -61,7 +61,8 @@ if __name__ == "__main__":
     classes = 2
     # setup up the network
     NNmodel = custom1DNet(width,classes)
-    NNmodel.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+    #NNmodel.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+    NNmodel.compile(loss='sparse_categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
     NNmodel.summary()
     # find te number of drums
     num_drums = len(os.listdir(drumsdir))
