@@ -64,6 +64,7 @@ def loadFolder(foldername,numitems,usefft,rawwidth):
     #width = 10580000
     #width = raw_width
     #rawdatarr = np.empty([numitems,10580000])
+    print("numitems: ",numitems," type: ",type(numitems)," rawwidth: ",rawwidth," rawwidth type: ",type(rawwidth))
     rawdatarr = np.empty([numitems,rawwidth])
     for file in os.listdir(foldername):
         path = os.path.join(foldername,file)
