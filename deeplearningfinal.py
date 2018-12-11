@@ -76,7 +76,8 @@ if __name__ == "__main__":
     datafolder = "./training"
     drumsdir = os.path.join(datafolder,"drums")
     guitardir = os.path.join(datafolder,"guitar")
-    width = 10580000
+    #width = 10580000
+    width = 1058000
     classes = 2
     # setup up the network
     NNmodel = custom1DNet(width,classes)
