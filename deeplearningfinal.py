@@ -46,7 +46,7 @@ def convertCatigories(lables,labarr):
     return numlables
     
 
-def getData(filename,use_fft=False,rwidth):
+def getData(filename,use_fft=False,rwidth=1):
     if os.path.isfile(filename):
         wavfile = AudioSegment.from_wav(filename)
         rawdata = wavfile.raw_data
