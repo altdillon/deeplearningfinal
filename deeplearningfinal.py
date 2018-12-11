@@ -46,13 +46,13 @@ def convertCatigories(lables,labarr):
     return numlables
     
 
-def getData(filename,use_fft=False):
+def getData(filename,use_fft=False,rwidth):
     if os.path.isfile(filename):
         wavfile = AudioSegment.from_wav(filename)
         rawdata = wavfile.raw_data
         data = np.frombuffer(rawdata,dtype=np.uint8)
-        if len(data) > 10580000:
-            data = data[:10580000]
+        if len(data) > rwidth:
+            data = data[:rwidth]
         if use_fft == True:
             data = fft(data)
         return data
@@ -66,7 +66,7 @@ def loadFolder(foldername,numitems,usefft,raw_width):
     rawdatarr = np.empty([numitems,10580000])
     for file in os.listdir(foldername):
         path = os.path.join(foldername,file)
-        rawdatarr[i] = getData(path,usefft)
+        rawdatarr[i] = getData(path,usefft,width)
         i += 1
     return rawdatarr
 
