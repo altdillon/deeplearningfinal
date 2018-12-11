@@ -95,9 +95,11 @@ if __name__ == "__main__":
     lables_drums = np.repeat(1.0,num_drums)
     lables_guitar = np.repeat(2.0,num_guitar)
     # load the raw wave data, or fft, which ever you want
+    print("loading folders for training information")
     raw_drums = loadFolder(drumsdir,num_drums,use_fft,width)
     raw_guitar = loadFolder(guitardir,num_guitar,use_fft,width)
     # do a train test split to split into validation and training data
+    print("doing train test split")
     train_drums,test_drums,train_guitar,test_guitar = train_test_split(raw_drums,raw_guitar,test_size=0.25, random_state=42)
     NNinput_2d = np.append(train_drums,train_guitar,axis=0)
     NNinput = np.expand_dims(NNinput_2d,axis=2)
