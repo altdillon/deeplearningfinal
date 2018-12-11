@@ -59,11 +59,12 @@ def getData(filename,use_fft=False,rwidth=1):
     else:
         return None
     
-def loadFolder(foldername,numitems,usefft,raw_width):
+def loadFolder(foldername,numitems,usefft,rawwidth):
     i = 0
     #width = 10580000
-    width = raw_width
-    rawdatarr = np.empty([numitems,10580000])
+    #width = raw_width
+    #rawdatarr = np.empty([numitems,10580000])
+    rawdatarr = np.empty([numitems,rawwidth])
     for file in os.listdir(foldername):
         path = os.path.join(foldername,file)
         rawdatarr[i] = getData(path,usefft,width)
