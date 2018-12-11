@@ -59,9 +59,10 @@ def getData(filename,use_fft=False):
     else:
         return None
     
-def loadFolder(foldername,numitems,usefft):
+def loadFolder(foldername,numitems,usefft,raw_width):
     i = 0
-    width = 10580000
+    #width = 10580000
+    width = raw_width
     rawdatarr = np.empty([numitems,10580000])
     for file in os.listdir(foldername):
         path = os.path.join(foldername,file)
@@ -91,8 +92,8 @@ if __name__ == "__main__":
     lables_drums = np.repeat(1.0,num_drums)
     lables_guitar = np.repeat(2.0,num_guitar)
     # load the raw wave data, or fft, which ever you want
-    raw_drums = loadFolder(drumsdir,num_drums,use_fft)
-    raw_guitar = loadFolder(guitardir,num_guitar,use_fft)
+    raw_drums = loadFolder(drumsdir,num_drums,use_fft,width)
+    raw_guitar = loadFolder(guitardir,num_guitar,use_fft,width)
     # do a train test split to split into validation and training data
     train_drums,test_drums,train_guitar,test_guitar = train_test_split(raw_drums,raw_guitar,test_size=0.25, random_state=42)
     NNinput_2d = np.append(train_drums,train_guitar,axis=0)
