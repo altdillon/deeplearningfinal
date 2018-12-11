@@ -85,8 +85,11 @@ if __name__ == "__main__":
     num_drums = len(os.listdir(drumsdir))
     num_guitar = len(os.listdir(guitardir))
     # generate the lables
-    lables_drums = np.repeat("drums",num_drums)
-    lables_guitar = np.repeat("guitar",num_guitar)
+    #lables_drums = np.repeat("drums",num_drums)
+    #lables_guitar = np.repeat("guitar",num_guitar)
+    # changed lables to be numbers instead of other dumb thing like string or whatever, I don't really care at this point...
+    lables_drums = np.repeat(1.0,num_drums)
+    lables_guitar = np.repeat(2.0,num_guitar)
     # load the raw wave data, or fft, which ever you want
     raw_drums = loadFolder(drumsdir,num_drums,use_fft)
     raw_guitar = loadFolder(guitardir,num_guitar,use_fft)
