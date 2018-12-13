@@ -108,6 +108,7 @@ if __name__ == "__main__":
     raw_guitar = loadFolder(guitardir,num_guitar,use_fft,width)
     # apply the down sample
     if do_downsample:
+        print("running down sample")
         raw_drums = applyDownSample(raw_drums,width)
         raw_guitar = applyDownSample(raw_guitar,width)
     
@@ -121,8 +122,8 @@ if __name__ == "__main__":
     # now we just do the deed
     if training == True:
         print("now training...")
-        NNmodel.fit(NNinput,trainingOutputLables.reshape(6,1),epochs=train_epochs,verbose=1)
-    
+        #NNmodel.fit(NNinput,trainingOutputLables.reshape(6,1),epochs=train_epochs,verbose=1)
+        NNmodel.fit(NNinput,trainingOutputLables,epochs=train_epochs,verbose=1)
     
     
     
