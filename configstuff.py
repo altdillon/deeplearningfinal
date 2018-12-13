@@ -28,3 +28,6 @@ testingFolder = "testing"
 # settings for training
 train_epochs = 25 # I this is what I used for the midterm
 batch_size = 32 # defult value in kears anyway
+# define a downample factor
+do_downsample = True
+downsample_factor = 4

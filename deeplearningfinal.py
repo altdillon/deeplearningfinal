@@ -13,6 +13,7 @@ import os
 import glob # for the glory of glob
 # import scipy stuff for fft
 from scipy.fftpack import fft
+from scipy.signal import decimate # for down sampling
 # import keras for the convultional stuff
 import keras
 from keras.models import Sequential
@@ -28,6 +29,13 @@ from configstuff import *
 #from AlexNet import *
 #from LeNet import *
 from custom1dNet import *
+
+def applyDownSample(arr,width):
+    arrd = np.empty(width)
+    for i in arr:
+        arrd = yd = decimate(i,downsample_factor) # down sampling factor is defined in the config file
+        
+    return arrd
 
 def convertCatigories(lables,labarr):
     numlables = np.empty(len(labarr))
@@ -98,13 +106,18 @@ if __name__ == "__main__":
     print("loading folders for training information")
     raw_drums = loadFolder(drumsdir,num_drums,use_fft,width)
     raw_guitar = loadFolder(guitardir,num_guitar,use_fft,width)
+    # apply the down sample
+    if do_downsample:
+        raw_drums = applyDownSample(raw_drums,width)
+        raw_guitar = applyDownSample(raw_guitar,width)
+    
     # do a train test split to split into validation and training data
     print("doing train test split")
     train_drums,test_drums,train_guitar,test_guitar = train_test_split(raw_drums,raw_guitar,test_size=0.25, random_state=42)
     NNinput_2d = np.append(train_drums,train_guitar,axis=0)
     NNinput = np.expand_dims(NNinput_2d,axis=2)
     trainingOutputLables = np.append(lables_drums[:len(train_drums)],lables_guitar[:len(train_guitar)])
-    numerical_lables = convertCatigories(trainingOutputLables,catigoryies)
+    #numerical_lables = convertCatigories(trainingOutputLables,catigoryies)
     # now we just do the deed
     if training == True:
         print("now training...")
