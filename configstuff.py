@@ -10,7 +10,7 @@ import os
 
 # just variables to turn stuff on and off
 testing = False
-training = False
+training = True
 classify = False
 display_results = False
 use_fft = False
