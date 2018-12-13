@@ -115,15 +115,17 @@ if __name__ == "__main__":
     # do a train test split to split into validation and training data
     print("doing train test split")
     train_drums,test_drums,train_guitar,test_guitar = train_test_split(raw_drums,raw_guitar,test_size=0.25, random_state=42)
-    NNinput_2d = np.append(train_drums,train_guitar,axis=0)
-    NNinput = np.expand_dims(NNinput_2d,axis=2)
+    NNinput = np.append(train_drums,train_guitar,axis=0)
+    NNinput_3d = NNinput.reshape(-1,len(NNinput),1) # the input for a Keras seqnetal layer has to be 3d.  So we're making it 2d
+    #NNinput = np.expand_dims(NNinput_2d,axis=2)
     trainingOutputLables = np.append(lables_drums[:len(train_drums)],lables_guitar[:len(train_guitar)])
     #numerical_lables = convertCatigories(trainingOutputLables,catigoryies)
     # now we just do the deed
     if training == True:
         print("now training...")
         #NNmodel.fit(NNinput,trainingOutputLables.reshape(6,1),epochs=train_epochs,verbose=1)
-        NNmodel.fit(NNinput,trainingOutputLables,epochs=train_epochs,verbose=1)
-    
+        NNmodel.fit(NNinput_3d,trainingOutputLables,epochs=train_epochs,verbose=1)
+    else:
+        print("training option is turned off")
     
     
