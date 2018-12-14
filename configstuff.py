@@ -14,6 +14,7 @@ classify = False
 display_results = False
 use_fft = False
 save_trained_model = True
+Load_trained_model = False
 # current nurl networks, AlexNet,LeNet, maybe some custom stuff
 currentNetwork = "CustomNet"
 # list for instrument catigoryies
@@ -30,3 +31,4 @@ batch_size = 32 # defult value in kears anyway
 # define a downample factor
 do_downsample = True
 downsample_factor = 4
+savedFileName = "savedTestModel.h5"

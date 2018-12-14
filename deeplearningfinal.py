@@ -107,8 +107,8 @@ if __name__ == "__main__":
     #lables_drums = np.repeat("drums",num_drums)
     #lables_guitar = np.repeat("guitar",num_guitar)
     # changed lables to be numbers instead of other dumb thing like string or whatever, I don't really care at this point...
-    lables_drums = np.repeat(1.0,num_drums)
-    lables_guitar = np.repeat(2.0,num_guitar)
+    lables_drums = np.repeat(0.0,num_drums)
+    lables_guitar = np.repeat(1.0,num_guitar)
     # load the raw wave data, or fft, which ever you want
     print("loading folders for training information")
     raw_drums = loadFolder(drumsdir,num_drums,use_fft,raw_width)
@@ -129,6 +129,7 @@ if __name__ == "__main__":
     NNmodel = custom1DNet(width,classes)
     #NNmodel.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
     NNmodel.compile(loss='sparse_categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+    #NNmodel.compile(loss='mean_squared_error', optimizer='adam',metrics=['accuracy'])
     NNmodel.summary()
     
     # do a train test split to split into validation and training data
@@ -150,3 +151,4 @@ if __name__ == "__main__":
     # save the trined model to a file
     if save_trained_model:
         print("saving trained modle to a file")
+        NNmodel.save(savedFileName)
