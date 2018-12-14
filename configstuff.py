@@ -30,5 +30,5 @@ train_epochs = 132 # I this is what I used for the midterm, which is 25
 batch_size = 32 # defult value in kears anyway
 # define a downample factor
 do_downsample = True
-downsample_factor = 4
+downsample_factor = 5
 savedFileName = "savedTestModel.h5"
