@@ -147,4 +147,6 @@ if __name__ == "__main__":
     else:
         print("training option is turned off")
     
-    
+    # save the trined model to a file
+    if save_trained_model:
+        print("saving trained modle to a file")
