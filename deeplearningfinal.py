@@ -31,10 +31,23 @@ from configstuff import *
 from custom1dNet import *
 
 def applyDownSample(arr,width):
-    arrd = np.empty(width)
-    for i in arr:
-        arrd = yd = decimate(i,downsample_factor) # down sampling factor is defined in the config file
-        
+    #arrd = np.empty(width)
+    #newwidth = 264500 # with with current downsample factor, yes this is a massive cluge.  But we gotta make this thing work
+    #arrd = np.empty([arr.shape[0],newwidth])
+#    for i in arr:
+#        arrd = decimate(i,downsample_factor) # down sampling factor is defined in the config file
+    
+    # run the first reducation operation, so we can know how big to make the output array
+    decimated = decimate(arr[0],downsample_factor)
+    newWidth = len(decimated)
+    arrd = np.empty([arr.shape[0],newWidth])
+    arrd[0] = decimated
+
+    # now that we know how big our decimation is we can run the rest
+    for i in np.arange(1,arrd.shape[0]):
+        decimated = decimate(arr[i],downsample_factor) # down sampling factor is defined in the config file!
+        arrd[i] = decimated
+    
     return arrd
 
 def convertCatigories(lables,labarr):

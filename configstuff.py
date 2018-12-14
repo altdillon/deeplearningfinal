@@ -9,8 +9,7 @@ Created on Fri Dec  7 17:27:12 2018
 import os
 
 # just variables to turn stuff on and off
-testing = False
-training = True
+training = False
 classify = False
 display_results = False
 use_fft = False
@@ -29,5 +28,5 @@ testingFolder = "testing"
 train_epochs = 25 # I this is what I used for the midterm
 batch_size = 32 # defult value in kears anyway
 # define a downample factor
-do_downsample = False
+do_downsample = True
 downsample_factor = 4
