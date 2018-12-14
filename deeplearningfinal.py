@@ -89,7 +89,7 @@ def loadFolder(foldername,numitems,usefft,rawwidth):
     rawdatarr = np.empty([numitems,rawwidth])
     for file in os.listdir(foldername):
         path = os.path.join(foldername,file)
-        rawdatarr[i] = getData(path,usefft,width)
+        rawdatarr[i] = getData(path,usefft,rawwidth)
         i += 1
     return rawdatarr
 
@@ -98,14 +98,8 @@ if __name__ == "__main__":
     datafolder = "./training"
     drumsdir = os.path.join(datafolder,"drums")
     guitardir = os.path.join(datafolder,"guitar")
-    #width = 10580000
-    width = 1058000
-    classes = 2
-    # setup up the network
-    NNmodel = custom1DNet(width,classes)
-    #NNmodel.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
-    NNmodel.compile(loss='sparse_categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
-    NNmodel.summary()
+    raw_width = 1058000
+
     # find te number of drums
     num_drums = len(os.listdir(drumsdir))
     num_guitar = len(os.listdir(guitardir))
@@ -117,13 +111,25 @@ if __name__ == "__main__":
     lables_guitar = np.repeat(2.0,num_guitar)
     # load the raw wave data, or fft, which ever you want
     print("loading folders for training information")
-    raw_drums = loadFolder(drumsdir,num_drums,use_fft,width)
-    raw_guitar = loadFolder(guitardir,num_guitar,use_fft,width)
+    raw_drums = loadFolder(drumsdir,num_drums,use_fft,raw_width)
+    raw_guitar = loadFolder(guitardir,num_guitar,use_fft,raw_width)
     # apply the down sample
     if do_downsample:
         print("running down sample")
-        raw_drums = applyDownSample(raw_drums,width)
-        raw_guitar = applyDownSample(raw_guitar,width)
+        raw_drums = applyDownSample(raw_drums,raw_width)
+        raw_guitar = applyDownSample(raw_guitar,raw_width)
+
+    # width is the shape that we're telling the NN the input is going to be
+    width = None
+    if raw_drums.shape[1] == raw_guitar.shape[1]:
+        width = raw_drums.shape[1]
+    
+    classes = 2
+    # setup up the network
+    NNmodel = custom1DNet(width,classes)
+    #NNmodel.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+    NNmodel.compile(loss='sparse_categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+    NNmodel.summary()
     
     # do a train test split to split into validation and training data
     print("doing train test split")
