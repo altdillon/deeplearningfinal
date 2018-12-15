@@ -24,6 +24,7 @@ from keras.models import load_model # added
 import matplotlib.pyplot as plt
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from keras.regularizers import l2
+from sklearn.model_selection import StratifiedKFold # needed for figuring out how well the model did
 # config file stuff
 from configstuff import *
 # import the name spaces for the nurl network models 
@@ -88,6 +89,11 @@ def loadFolder(foldername,numitems,usefft,rawwidth):
         i += 1
     return rawdatarr
 
+# usefull blog that this functions is based on:
+# https://machinelearningmastery.com/evaluate-performance-deep-learning-models-keras/
+def testModel(NNmodel,testInputs,testOutputs):
+    pass
+
 if __name__ == "__main__":
     # setup the folders
     datafolder = "./training"
@@ -130,7 +136,8 @@ if __name__ == "__main__":
     # do a train test split to split into validation and training data
     print("doing train test split")
     train_drums,test_drums,train_guitar,test_guitar = train_test_split(raw_drums,raw_guitar,test_size=0.25, random_state=42)
-    NNinput = np.append(train_drums,train_guitar,axis=0)
+    NNinput = np.append(train_drums,train_guitar,axis=0) # inputs for training
+    NNinput_test = np.append(test_drums,test_guitar,axis=0) # inputs for testing
     #NNinput_3d = NNinput.reshape(-1,len(NNinput),1) # the input for a Keras seqnetal layer has to be 3d.  So we're making it 2d
     NNinput_3d = np.expand_dims(NNinput,axis=2)
     trainingOutputLables = np.append(lables_drums[:len(train_drums)],lables_guitar[:len(train_guitar)])
@@ -151,5 +158,7 @@ if __name__ == "__main__":
 
     loadedNN = None
     if not save_trained_model and Load_trained_model:
+        print("loading pre saved model and evuating how well it trained")
         loadedNN = load_model(savedFileName)
-        
+        testModel(loadedNN,None,None)
+        # start evulating how well the model trained 

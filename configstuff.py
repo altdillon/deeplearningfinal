@@ -9,12 +9,13 @@ Created on Fri Dec  7 17:27:12 2018
 import os
 
 # just variables to turn stuff on and off
-training = False
-classify = True
+training = True
+classify = False
+testmodel = False
 display_results = False
 use_fft = False
 save_trained_model = True
-Load_trained_model = False
+Load_trained_model = True
 # current nurl networks, AlexNet,LeNet, maybe some custom stuff
 currentNetwork = "CustomNet"
 # list for instrument catigoryies
@@ -26,8 +27,8 @@ catigoryies = ["drums","guitar"]
 traingFolder = "training"
 testingFolder = "testing" 
 # settings for training
-train_epochs = 132 # I this is what I used for the midterm, which is 25
-batch_size = 32 # defult value in kears anyway
+train_epochs = 90 # I this is what I used for the midterm, which is 25
+batch_size = 10 
 # define a downample factor
 do_downsample = True
 downsample_factor = 5
