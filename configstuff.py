@@ -13,7 +13,7 @@ training = True
 classify = False
 testmodel = False
 display_results = False
-use_fft = False
+use_fft = True
 save_trained_model = True
 Load_trained_model = True
 # current nurl networks, AlexNet,LeNet, maybe some custom stuff
