@@ -16,6 +16,7 @@ from scipy.fftpack import fft
 from scipy.signal import decimate # for down sampling
 # import keras for the convultional stuff
 import keras
+from keras.callbacks import CSVLogger
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, Flatten,Conv2D, MaxPooling2D
 from keras.layers.normalization import BatchNormalization
@@ -31,12 +32,6 @@ from configstuff import *
 from custom1dNet import *
 
 def applyDownSample(arr,width):
-    #arrd = np.empty(width)
-    #newwidth = 264500 # with with current downsample factor, yes this is a massive cluge.  But we gotta make this thing work
-    #arrd = np.empty([arr.shape[0],newwidth])
-#    for i in arr:
-#        arrd = decimate(i,downsample_factor) # down sampling factor is defined in the config file
-    
     # run the first reducation operation, so we can know how big to make the output array
     decimated = decimate(arr[0],downsample_factor)
     newWidth = len(decimated)
@@ -144,7 +139,8 @@ if __name__ == "__main__":
     if training == True:
         print("now training...")
         #NNmodel.fit(NNinput,trainingOutputLables.reshape(6,1),epochs=train_epochs,verbose=1)
-        NNmodel.fit(NNinput_3d,trainingOutputLables,epochs=train_epochs,verbose=1)
+        csv_logger = CSVLogger(csvfilename) # csvfilename defined in config file name
+        NNmodel.fit(NNinput_3d,trainingOutputLables,epochs=train_epochs,verbose=1,callbacks=[csv_logger])
     else:
         print("training option is turned off")
     
@@ -152,3 +148,8 @@ if __name__ == "__main__":
     if save_trained_model:
         print("saving trained modle to a file")
         NNmodel.save(savedFileName)
+
+    loadedNN = None
+    if not save_trained_model and Load_trained_model:
+        loadedNN = load_model(savedFileName)
+        

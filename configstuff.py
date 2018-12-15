@@ -32,3 +32,4 @@ batch_size = 32 # defult value in kears anyway
 do_downsample = True
 downsample_factor = 5
 savedFileName = "savedTestModel.h5"
+csvfilename = "learningrates.csv"
