@@ -9,8 +9,8 @@ Created on Fri Dec  7 17:27:12 2018
 import os
 
 # just variables to turn stuff on and off
-training = True
-classify = False
+training = False
+classify = True
 display_results = False
 use_fft = False
 save_trained_model = True
