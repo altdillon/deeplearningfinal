@@ -28,7 +28,7 @@ traingFolder = "training"
 testingFolder = "testing" 
 # settings for training
 train_epochs = 90 # I this is what I used for the midterm, which is 25
-batch_size = 10 
+batch_size = 20 
 # define a downample factor
 do_downsample = True
 downsample_factor = 5
