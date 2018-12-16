@@ -12,7 +12,7 @@ import os
 training = False
 classify = True
 testmodel = True
-display_results = False
+#display_results = False
 use_fft = False
 save_trained_model = False
 Load_trained_model = True

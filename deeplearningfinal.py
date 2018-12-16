@@ -185,12 +185,9 @@ if __name__ == "__main__":
         print("saving trained modle to a file")
         NNmodel.save(savedFileName)
 
-    loadedNN = None
+    #loadedNN = None
     if not save_trained_model and Load_trained_model:
         print("loading pre saved model and evuating how well it trained")
         loadedNN = load_model(savedFileName)
-        #testModel(loadedNN,NNinput_test,testingOutputLables)
-        #testModel(loadedNN,NNinput,testingOutputLables)
-        percentCorrct = testModel(loadedNN,NNinput_test_3d,testingOutputLables)
-        print("percent correct: ",100*percentCorrct," %")
-        # start evulating how well the model trained 
+        if testmodel:
+            loadedNN.predict(NNinput_test_3d)
