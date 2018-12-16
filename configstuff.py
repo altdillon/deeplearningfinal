@@ -9,12 +9,12 @@ Created on Fri Dec  7 17:27:12 2018
 import os
 
 # just variables to turn stuff on and off
-training = True
-classify = False
-testmodel = False
+training = False
+classify = True
+testmodel = True
 display_results = False
 use_fft = False
-save_trained_model = True
+save_trained_model = False
 Load_trained_model = True
 # current nurl networks, AlexNet,LeNet, maybe some custom stuff
 currentNetwork = "CustomNet"
@@ -32,5 +32,5 @@ batch_size = 10
 # define a downample factor
 do_downsample = True
 downsample_factor = 5
-savedFileName = "savedTestModel.h5"
+savedFileName = "savedTestModel_subset.h5"
 csvfilename = "learningrates.csv"

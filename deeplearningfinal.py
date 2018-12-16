@@ -91,8 +91,23 @@ def loadFolder(foldername,numitems,usefft,rawwidth):
 
 # usefull blog that this functions is based on:
 # https://machinelearningmastery.com/evaluate-performance-deep-learning-models-keras/
+# this function returns how much of the model is correct
 def testModel(NNmodel,testInputs,testOutputs):
-    pass
+    # just to make sure the number of inputs and outputs have the same dims
+    if len(testInputs) != len(testOutputs):
+        print("the number of inputs doese not equal the number of outputs")
+    numIterations = len(testInputs)
+    #NNoutputs = np.empty(numIterations)
+    NNscores = [] # empty list
+    
+#    for i in np.arange(0,numIterations):
+#        #testInput_3d = np.expand_dims(testInputs[i],axis=2)
+#        testInput_3d = np.reshape(-1,len(testInputs[i]),1)
+    
+    scores = NNmodel.predict(testInputs)
+    
+    return NNscores
+        
 
 if __name__ == "__main__":
     # setup the folders
@@ -138,9 +153,12 @@ if __name__ == "__main__":
     train_drums,test_drums,train_guitar,test_guitar = train_test_split(raw_drums,raw_guitar,test_size=0.25, random_state=42)
     NNinput = np.append(train_drums,train_guitar,axis=0) # inputs for training
     NNinput_test = np.append(test_drums,test_guitar,axis=0) # inputs for testing
+    # inputs to the NN model have to be expaned to 3 dementions for Keras
     #NNinput_3d = NNinput.reshape(-1,len(NNinput),1) # the input for a Keras seqnetal layer has to be 3d.  So we're making it 2d
     NNinput_3d = np.expand_dims(NNinput,axis=2)
+    NNinput_test_3d = np.expand_dims(NNinput_test,axis=2) 
     trainingOutputLables = np.append(lables_drums[:len(train_drums)],lables_guitar[:len(train_guitar)])
+    testingOutputLables = np.append(lables_drums[:len(test_drums)],lables_guitar[:len(test_guitar)])
     #numerical_lables = convertCatigories(trainingOutputLables,catigoryies)
     # now we just do the deed
     if training == True:
@@ -160,5 +178,7 @@ if __name__ == "__main__":
     if not save_trained_model and Load_trained_model:
         print("loading pre saved model and evuating how well it trained")
         loadedNN = load_model(savedFileName)
-        testModel(loadedNN,None,None)
+        #testModel(loadedNN,NNinput_test,testingOutputLables)
+        #testModel(loadedNN,NNinput,testingOutputLables)
+        testModel(loadedNN,NNinput_test_3d,testingOutputLables)
         # start evulating how well the model trained 
