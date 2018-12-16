@@ -25,6 +25,7 @@ import matplotlib.pyplot as plt
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from keras.regularizers import l2
 from sklearn.model_selection import StratifiedKFold # needed for figuring out how well the model did
+from sklearn.metrics import classification_report
 # config file stuff
 from configstuff import *
 # import the name spaces for the nurl network models 
