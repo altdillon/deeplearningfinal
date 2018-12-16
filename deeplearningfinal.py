@@ -191,5 +191,5 @@ if __name__ == "__main__":
         print("loading pre saved model and evuating how well it trained")
         loadedNN = load_model(savedFileName)
         if testmodel:
-            preds = loadedNN.predict(NNinput_test_3d)
-            print(classification_report(testingOutputLables.argmax(axis=0),preds.argmax(axis=0)))
+           scores= loadedNN.evaluate(NNinput_test_3d,testingOutputLables)
+           print(scores)
