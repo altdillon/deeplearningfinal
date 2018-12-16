@@ -2,19 +2,18 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Dec  7 17:27:12 2018
-
 @author: dillon
 """
 
 import os
 
 # just variables to turn stuff on and off
-training = True
-classify = False
-testmodel = False
+training = False
+classify = True
+testmodel = True
 display_results = False
-use_fft = True
-save_trained_model = True
+use_fft = False
+save_trained_model = False
 Load_trained_model = True
 # current nurl networks, AlexNet,LeNet, maybe some custom stuff
 currentNetwork = "CustomNet"
@@ -28,9 +27,9 @@ traingFolder = "training"
 testingFolder = "testing" 
 # settings for training
 train_epochs = 90 # I this is what I used for the midterm, which is 25
-batch_size = 20 
+batch_size = 10 
 # define a downample factor
 do_downsample = True
 downsample_factor = 5
-savedFileName = "savedTestModel.h5"
+savedFileName = "savedTestModel_fullset.h5"
 csvfilename = "learningrates.csv"
