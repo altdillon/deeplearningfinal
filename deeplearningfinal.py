@@ -104,7 +104,13 @@ def testModel(NNmodel,testInputs,testOutputs):
 #        #testInput_3d = np.expand_dims(testInputs[i],axis=2)
 #        testInput_3d = np.reshape(-1,len(testInputs[i]),1)
     
-    scores = NNmodel.predict(testInputs)
+    scores = NNmodel.predict(testInputs).round()
+    
+    for i in scores:
+        if i[0] == 1 and i[1] == 0:
+            print("drums")
+        elif i[0] == 0 and i[1] == 1:
+            print("guitar")
     
     return NNscores
         
