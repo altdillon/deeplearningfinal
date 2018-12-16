@@ -192,4 +192,4 @@ if __name__ == "__main__":
         loadedNN = load_model(savedFileName)
         if testmodel:
             preds = loadedNN.predict(NNinput_test_3d)
-            print(classification_report(testingOutputLables,preds))
+            print(classification_report(testingOutputLables.argmax(axis=1),preds.argmax(axis=1)))
