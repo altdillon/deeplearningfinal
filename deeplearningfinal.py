@@ -98,7 +98,7 @@ def testModel(NNmodel,testInputs,testOutputs):
         print("the number of inputs doese not equal the number of outputs")
     numIterations = len(testInputs)
     #NNoutputs = np.empty(numIterations)
-    NNscores = [] # empty list
+    NNoutputs = [] # empty list
     
 #    for i in np.arange(0,numIterations):
 #        #testInput_3d = np.expand_dims(testInputs[i],axis=2)
@@ -106,14 +106,19 @@ def testModel(NNmodel,testInputs,testOutputs):
     
     scores = NNmodel.predict(testInputs).round()
     
+    # this part is kind of a kluge, but I need to make it work
     for i in scores:
         if i[0] == 1 and i[1] == 0:
-            print("drums")
+            #print("drums")
+            NNoutputs.append(0) # 0 is the code for drums
         elif i[0] == 0 and i[1] == 1:
-            print("guitar")
+            #print("guitar")
+            NNoutputs.append(1) # one is the code for guitar
     
-    return NNscores
+    correctValue = NNoutputs == testOutputs
+    u,counts = np.unique(correctValue, return_counts=True)
         
+    return (counts[0]/numIterations)
 
 if __name__ == "__main__":
     # setup the folders
@@ -186,5 +191,6 @@ if __name__ == "__main__":
         loadedNN = load_model(savedFileName)
         #testModel(loadedNN,NNinput_test,testingOutputLables)
         #testModel(loadedNN,NNinput,testingOutputLables)
-        testModel(loadedNN,NNinput_test_3d,testingOutputLables)
+        percentCorrct = testModel(loadedNN,NNinput_test_3d,testingOutputLables)
+        print("percent correct: ",100*percentCorrct," %")
         # start evulating how well the model trained 

@@ -32,5 +32,5 @@ batch_size = 10
 # define a downample factor
 do_downsample = True
 downsample_factor = 5
-savedFileName = "savedTestModel.h5"
+savedFileName = "savedTestModel_fullset.h5"
 csvfilename = "learningrates.csv"
