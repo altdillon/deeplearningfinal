@@ -192,4 +192,5 @@ if __name__ == "__main__":
         loadedNN = load_model(savedFileName)
         if testmodel:
            scores= loadedNN.evaluate(NNinput_test_3d,testingOutputLables)
-           print(scores)
+           print('Test loss:', score[0])
+           print('Test accuracy:', score[1])
